@@ -1,6 +1,6 @@
 "use client";
 import { Client } from "@stomp/stompjs";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const token =
   "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0YWlraG9hbjEiLCJpYXQiOjE3NDQ0NTI5OTMsImV4cCI6MTc0NDQ3NDU5M30.Bs5sxcwvM8oXrHNVtN8X0sfB2APLBg1O4eAQma9MPIw";
@@ -21,6 +21,36 @@ export default function Home() {
   const [messages, setMessages] = useState<any[]>([]);
   const [newMessage, setNewMessage] = useState("");
   const [isComposing, setIsComposing] = useState(false);
+
+  const usersMock = useMemo(() => {
+    return [
+      {
+        name: "Fikri Ruslandi",
+        status: "online",
+        message: "Hello there...",
+      },
+      {
+        name: "Moch Ramdhani",
+        status: "online",
+        message: "How are you?",
+      },
+      {
+        name: "Abu Abdullah Nagraha",
+        status: "online",
+        message: "Is typing a message...",
+      },
+      {
+        name: "Muhammad Fauzi",
+        status: "offline",
+        message: "See you tomorrow!",
+      },
+      {
+        name: "Nurman Tri Gumelar",
+        status: "online",
+        message: "Thanks!",
+      },
+    ];
+  }, []);
 
   useEffect(() => {
     client.onConnect = () => {
@@ -65,33 +95,7 @@ export default function Home() {
         </div>
 
         <div className="overflow-y-auto">
-          {[
-            {
-              name: "Fikri Ruslandi",
-              status: "online",
-              message: "Hello there...",
-            },
-            {
-              name: "Moch Ramdhani",
-              status: "online",
-              message: "How are you?",
-            },
-            {
-              name: "Abu Abdullah Nagraha",
-              status: "online",
-              message: "Is typing a message...",
-            },
-            {
-              name: "Muhammad Fauzi",
-              status: "offline",
-              message: "See you tomorrow!",
-            },
-            {
-              name: "Nurman Tri Gumelar",
-              status: "online",
-              message: "Thanks!",
-            },
-          ].map((chat, index) => (
+          {usersMock?.map((chat, index) => (
             <div
               key={index}
               className="flex items-center p-4 hover:bg-gray-50 cursor-pointer border-b"
@@ -124,6 +128,7 @@ export default function Home() {
               <div className="text-sm text-green-500">Online</div>
             </div>
           </div>
+
           <div className="flex space-x-3">
             <button className="p-2 hover:bg-gray-100 rounded-full">
               <svg
@@ -140,6 +145,7 @@ export default function Home() {
                 />
               </svg>
             </button>
+
             <button className="p-2 hover:bg-gray-100 rounded-full">
               <svg
                 className="w-6 h-6 text-gray-500"
@@ -155,6 +161,7 @@ export default function Home() {
                 />
               </svg>
             </button>
+
             <button className="p-2 hover:bg-gray-100 rounded-full">
               <svg
                 className="w-6 h-6 text-gray-500"
@@ -218,6 +225,7 @@ export default function Home() {
               placeholder="Type a message..."
               className="flex-1 p-3 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
             />
+
             <button
               onClick={handleSendMessage}
               className="bg-blue-500 text-white p-3 rounded-full hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
