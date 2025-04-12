@@ -179,22 +179,22 @@ export default function Home() {
             <div
               key={index}
               className={`flex ${
-                message.sender === role ? "justify-end" : "justify-start"
+                message.senderId === userId ? "justify-end" : "justify-start"
               }`}
             >
-              {message.sender !== role && (
+              {message.senderId !== userId && (
                 <div className="w-8 h-8 bg-gray-300 rounded-full mr-2"></div>
               )}
               <div
                 className={`max-w-[70%] p-3 rounded-lg ${
-                  message.sender === role
+                  message.senderId === userId
                     ? "bg-blue-500 text-white"
                     : "bg-gray-100 text-gray-800"
                 }`}
               >
                 <p>{message.content}</p>
               </div>
-              {message.sender === role && (
+              {message.senderId === userId && (
                 <div className="w-8 h-8 bg-gray-300 rounded-full ml-2"></div>
               )}
             </div>
