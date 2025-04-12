@@ -20,6 +20,7 @@ const client = new Client({
 export default function Home() {
   const [messages, setMessages] = useState<any[]>([]);
   const [newMessage, setNewMessage] = useState("");
+  const [isComposing, setIsComposing] = useState(false);
 
   useEffect(() => {
     client.onConnect = () => {
@@ -75,19 +76,23 @@ export default function Home() {
               }`}
             >
               <p>{message.content}</p>
-              <p className="text-xs mt-1 opacity-70">
-                {new Date(message.timestamp).toLocaleTimeString()}
-              </p>
             </div>
           </div>
         ))}
       </div>
+
       <div className="flex gap-2">
         <input
           type="text"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
-          onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
+          onCompositionStart={() => setIsComposing(true)}
+          onCompositionEnd={() => setIsComposing(false)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !isComposing) {
+              handleSendMessage();
+            }
+          }}
           placeholder="Type a message..."
           className="flex-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
         />
