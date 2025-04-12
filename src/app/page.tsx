@@ -22,10 +22,14 @@ const client = new Client({
       console.log(`Received: ${message.body}`)
     );
 
-    client.publish({
-      destination: `/topic/${convId}`,
-      body: "First Message",
-    });
+    // client.publish({
+    //   destination: `/app/chat/sendMessage/${convId}`,
+    //   body: JSON.stringify({
+    //     messageType: "CHAT",
+    //     content: "First Message",
+    //     sendId: userId,
+    //   }),
+    // });
   },
   onStompError: (frame) => {
     console.error("STOMP error:", frame);
